@@ -1,0 +1,46 @@
+
+pipeline {
+    agent any
+    options {
+        skipDefaultCheckout(true)
+    }
+    stages {
+
+        stage('Cloning java repo') {
+            steps {
+                cleanWs()    // Clean before build
+                echo 'Start cloning java repo'
+                sh "git clone https://github.com/Vdevdem/spring-petclinic"
+                echo 'End cloning java repo'
+
+            }
+        }
+
+        stage('Create Docker Container') {
+            steps {
+                echo 'Start creating Docker Container'
+                sh 'cd spring-petclinic; ./mvnw spring-boot:build-image'
+                sh 'docker tag spring-petclinic:2.7.0-SNAPSHOT docker:5000/petclinic:v$BUILD_NUMBER'
+                echo 'End creating Docker Container'
+            }
+        }
+
+        stage('Push Docker Container to Docker Registry') {
+            steps {
+               echo 'Stast push Docker Container to Docker Registry'
+               sh 'docker push docker:5000/petclinic:v$BUILD_NUMBER'
+               echo 'End push Docker Container to Docker Registry'
+            }
+        }
+
+        stage('Deploy Docker Container to Prod host') {
+            steps {
+                echo 'Start Deploying Docker Container to Prod host'
+                sh 'pwd; ls -al; git clone https://github.com/Vdevdem/main'
+                sh 'cd main; pwd; ls -al; ansible-playbook playbook.yml -u vdevdem --key-file=/key/id_rsa --extra-vars "build=$BUILD_NUMBER"' #->create file
+                echo 'End Deploying Docker Container to Prod host'
+            }
+         }
+
+         }
+  }
