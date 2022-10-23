@@ -37,7 +37,7 @@ pipeline {
             steps {
                 echo 'Start Deploying Docker Container to Prod host'
                 sh 'pwd; ls -al; git clone https://github.com/Vdevdem/main'
-                sh 'cd main; pwd; ls -al; ansible-playbook playbook.yml -u vdevdem --key-file=/key/id_rsa --extra-vars "build=$BUILD_NUMBER"' #->create file
+                sh 'cd main; pwd; ls -al; ansible-playbook playbook.yml -u vdevdem --key-file=/key/id_rsa --extra-vars "build=$BUILD_NUMBER"' 
                 echo 'End Deploying Docker Container to Prod host'
             }
          }
