@@ -6,12 +6,12 @@ pipeline {
           steps {
               git branch: 'main', credentialsId: 'Git_FProject', url: 'https://github.com/Vdevdem/spring-petclinic.git'
           }
+         }
 
         stage('hello'){
           steps {
                 sh "echo 'hello"
             }
           }
-      }
-   }
+    }
 }
