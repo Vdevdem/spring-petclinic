@@ -18,8 +18,10 @@ pipeline {
           steps {
                 echo 'Build Start'
                 git clone https://github.com/Vdevdem/spring-petclinic.git
+                bat"""
                 ./mvn package
                 java -Dserver.port=8888 -jar target/*.jar
+                """
                }
           }
     }
