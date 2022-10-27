@@ -17,7 +17,7 @@ pipeline {
         stage('build') {
           steps {
                 echo 'Build Start'
-                git clone https://github.com/spring-projects/spring-petclinic.git
+                git clone https://github.com/Vdevdem/spring-petclinic.git
                 ./mvn package
                 java -Dserver.port=8888 -jar target/*.jar
                }
