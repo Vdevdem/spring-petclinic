@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage ('Checkout'){
           steps {
+          cleanWs()
               git branch: 'main', credentialsId: 'Git_FProject', url: 'https://github.com/Vdevdem/spring-petclinic.git'
           }
          }
@@ -19,7 +20,7 @@ pipeline {
                 echo 'Build Start'
                 
                 bat"""
-                git clone https://github.com/Vdevdem/spring-petclinic.git
+                rem git clone https://github.com/Vdevdem/spring-petclinic.git
                 
                 mvn package
                 java -Dserver.port=8888 -jar target/*.jar
