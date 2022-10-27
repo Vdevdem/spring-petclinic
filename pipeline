@@ -20,7 +20,8 @@ pipeline {
                 
                 bat"""
                 git clone https://github.com/Vdevdem/spring-petclinic.git
-                ./mvn package
+                
+                mvn package
                 java -Dserver.port=8888 -jar target/*.jar
                 """
                }
