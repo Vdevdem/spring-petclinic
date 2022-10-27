@@ -13,5 +13,14 @@ pipeline {
                 echo 'hello'
             }
           }
+
+        stage('Create Docker Container') {
+          steps {
+                echo 'Start creating Docker Container'
+                sh './mvnw spring-boot:build-image'
+                sh 'docker tag spring-petclinic:2.7.0-SNAPSHOT docker:5000/petclinic:v$BUILD_NUMBER'
+                echo 'End creating Docker Container'
+               }
+          }
     }
 }
