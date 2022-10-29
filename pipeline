@@ -9,6 +9,12 @@ pipeline {
           }
          }
 
+        stage('hello'){
+          steps {
+                echo 'hello'
+            }
+          }
+
         stage('build') {
           steps {
                 echo 'Build Start'
@@ -28,21 +34,13 @@ pipeline {
                   bat"""
                   cd spring-petclinic 
                   ./mvnw spring-boot:build-image
-                  docker tag spring-petclinic:2.7.0-SNAPSHOT docker:5000/petclinic:v$BUILD_NUMBER
+                  docker tag petclinic docker:5000/petclinic:v$BUILD_NUMBER
+                  docker push docker:5000/petclinic:v$BUILD_NUMBER
                   """
                   echo 'End creating Docker Container'
               }
           }
                                       
-          stage('Push Docker Container to Docker Registry') {
-              steps {
-                 echo 'Stast push Docker Container to Docker Registry'
-                 bat"""
-                 docker push docker:5000/petclinic:v$BUILD_NUMBER 
-                 """
-                 echo 'End push Docker Container to Docker Registry'
-              }
-          }
          
     }
 }
