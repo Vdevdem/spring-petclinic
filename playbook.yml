@@ -1,0 +1,27 @@
+---
+- hosts: all
+  gather_facts: false
+  become: true
+  vars:
+    build: 12
+
+
+  tasks:
+    - name: Update apt and install docker
+      apt:
+        name: docker
+        state: latest
+        update_cache: true
+
+    - name: Delete running containers
+      shell: docker rm -f $(docker ps --all --quiet)
+
+    - name: Delete all Docker Images
+      shell: docker rmi -f $(docker images --all --quiet)
+
+
+    - name: Pull Docker image
+      command: docker pull docker:5000/petclinic:v{{ build }}
+
+    - name: Run Docker image
+      command: docker run -d -p 80:8080 docker:5000/petclinic:v{{ build }}
