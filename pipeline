@@ -26,7 +26,7 @@ pipeline {
             steps{
               withCredentials([[$class:'AmazonWebServicesCredentialsBinding', accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'deployuser', secretKeyVariable:'AWS_SECRET_ACCESS_KEY']]) {              
                 bat"""
-                aws s3 cp target/*.jar s3://cloudart-bucket-for-aws
+                aws s3 cp target/spring-petclinic-2.7.3.jar s3://cloudart-bucket-for-aws
                 """
               }
             } 
