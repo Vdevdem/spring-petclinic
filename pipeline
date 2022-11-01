@@ -9,38 +9,32 @@ pipeline {
           }
          }
 
-        stage('hello'){
-          steps {
-                echo 'hello'
-            }
-          }
-
         stage('build') {
           steps {
                 echo 'Build Start'
 
                 bat"""
                 rem git clone https://github.com/Vdevdem/spring-petclinic.git
-
                 mvn package
-                java -Dserver.port=8888 -jar target/*.jar
+
                 """
                }
           }
 
-          stage('Create Docker Container') {
-              steps {
-                  echo 'Start creating Docker Container'
-                  bat"""
-                  cd spring-petclinic 
-                  ./mvnw spring-boot:build-image
-                  docker tag petclinic docker:5000/petclinic:v$BUILD_NUMBER
-                  docker push docker:5000/petclinic:v$BUILD_NUMBER
-                  """
-                  echo 'End creating Docker Container'
-              }
-          }
-                                      
-         
+
+          stage ('Upload artifact to s3'){
+            try {
+              withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+              bat"""
+                aws s3 dir
+                aws s3 mb s3://cloudart-bucket-for-aws
+                s3Upload(file:"${target/*.jar}", bucket:"${cloudart-bucket-for-aws}")
+                }
+
+              """
+                } catch(err)  {
+                    echo 'error in sending artifacts to s3'
+                }
+            }
     }
 }
