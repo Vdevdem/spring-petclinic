@@ -25,7 +25,9 @@ pipeline {
           stage ('Upload artifact to s3'){
             steps{
               withCredentials([[$class:'AmazonWebServicesCredentialsBinding', accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'deployuser', secretKeyVariable:'AWS_SECRET_ACCESS_KEY']]) {              
-                s3Upload(file:'${target/*.jar}', bucket:'${cloudart-bucket-for-aws}')
+                bat"""
+                aws s3 cp target/*.jar s3://cloudart-bucket-for-aws
+                """
               }
             } 
           }
