@@ -28,10 +28,9 @@ pipeline {
               bat"""
                 aws s3 dir
                 aws s3 mb s3://cloudart-bucket-for-aws
-                s3Upload(file:"${target/spring-petclinic-2.7.3.jar}", bucket:"${cloudart-bucket-for-aws}")
+                s3Upload(file:"${target/*.jar}", bucket:"${cloudart-bucket-for-aws}")
+                """
                 }
-
-              """
                 } catch(err)  {
                     echo 'error in sending artifacts to s3'
                 }
