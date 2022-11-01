@@ -24,7 +24,7 @@ pipeline {
 
           stage ('Upload artifact to s3'){
             try {
-              withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+              withCredentials([[$class:'AmazonWebServicesCredentialsBinding', accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'deployuser', secretKeyVariable:'AWS_SECRET_ACCESS_KEY']]) {
               bat"""
                 aws s3 dir
                 aws s3 mb s3://cloudart-bucket-for-aws
