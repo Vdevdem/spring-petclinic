@@ -34,7 +34,7 @@ pipeline {
           steps{
             bat"""
             aws s3 cp s3://cloudart-bucket-for-aws/spring-petclinic-2.7.3.jar ./
-            "C:\Program Files\PuTTY\\pscp.exe" -i "C:\Users\User\Desktop\fn\other\ec2\key\putty.ppk" "spring-petclinic-2.7.3.jar" "ec2-user@44.212.16.46:/home/ec2-user"
+            'C:\Program Files\PuTTY\\pscp.exe' -i 'C:\Users\User\Desktop\fn\other\ec2\key\putty.ppk' 'spring-petclinic-2.7.3.jar' 'ec2-user@44.212.16.46:/home/ec2-user'
             cd C:\Users\User\Desktop\fn\other\ec2
             ssh -i myFPinstance.pem ec2-user@44.212.16.46
             java -jar spring-petclinic-2.7.3.jar
