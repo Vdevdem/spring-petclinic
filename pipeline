@@ -32,18 +32,17 @@ pipeline {
 
         stage ('Deploy'){
           steps{
-
+            
             bat"""
             set pth=C:\\Program Files\\PuTTY
             set usr=ec2-user
             set srv=44.212.16.46
             
             aws s3 cp s3://cloudart-bucket-for-aws/spring-petclinic-2.7.3.jar ./
-            "%pth%\\pscp.exe" -i "C:\\Users\\User\\Desktop\\fn\\other\\ec2\\myFPinstance.ppk" "target/spring-petclinic-2.7.3.jar" "%usr%@%srv%:/home/%usr%"
-            cd C:\\Users\\User\\Desktop\\fn\\other\\ec2
+            "%pth%\\pscp.exe" -batch -i "C:\Users\User\Desktop\fn\other\ec2\myFPinstance.ppk" "target/spring-petclinic-2.7.3.jar" "%usr%@%srv%:/home/%usr%"
+            cd C:\Users\User\Desktop\fn\other\ec2
             ssh -i myFPinstance.pem ec2-user@44.212.16.46
-            java -jar spring-petclinic-2.7.3.jar &
-            
+            ./new.sh
             """
           }
         }
