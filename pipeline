@@ -33,7 +33,7 @@ pipeline {
         stage ('Deploy'){
           steps{
             withCredentials([[$class:'AmazonWebServicesCredentialsBinding', accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'deployuser', secretKeyVariable:'AWS_SECRET_ACCESS_KEY']]) { 
-              aws s3 cp s3://cloudart-bucket-for-aws/spring-petclinic-2.7.3.jar ./
+            aws s3 cp s3://cloudart-bucket-for-aws/spring-petclinic-2.7.3.jar ./
             }
             bat"""
             set pth=C:\\Program Files\\PuTTY
