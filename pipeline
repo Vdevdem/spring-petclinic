@@ -39,7 +39,7 @@ pipeline {
             set srv=44.212.16.46
 
             aws s3 cp s3://cloudart-bucket-for-aws/spring-petclinic-2.7.3.jar ./
-            echo y | "%pth%\\pscp.exe" -i "C:\\Users\\User\\Desktop\\fn\\other\\ec2\\key\\putty.ppk" "target/spring-petclinic-2.7.3.jar" "%usr%@%srv%:/home/%usr%" -y
+            echo y | "%pth%\\pscp.exe" -i "C:\\Users\\User\\Desktop\\fn\\other\\ec2\\key\\putty.ppk" "target/spring-petclinic-2.7.3.jar" "%usr%@%srv%:/home/%usr%"
             echo y | "%pth%\\plink.exe" -i "C:\\Users\\User\\Desktop\\fn\\other\\ec2\\key\\putty.ppk" ec2-user@44.212.16.46 "/home/ec2-user/new.sh"
             """
             }
