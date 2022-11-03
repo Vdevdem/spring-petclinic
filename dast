@@ -47,7 +47,6 @@ def scan_type
                  script {
                          echo "Pulling up last OWASP ZAP container --> Start"
                          bat """
-                         "C:\\Program Files\\Docker\\Docker\\DockerCli.exe" -SwitchDaemon
                          docker pull owasp/zap2docker-stable
                          """
                          echo "Pulling up last VMS container --> End"
