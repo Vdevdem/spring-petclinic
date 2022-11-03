@@ -22,24 +22,24 @@ pipeline {
 
           stage ('Upload artifact to s3'){
             steps{
-              withCredentials([[$class:'AmazonWebServicesCredentialsBinding', accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'deployuser', secretKeyVariable:'AWS_SECRET_ACCESS_KEY']]) {              
+              withCredentials([[$class:'AmazonWebServicesCredentialsBinding', accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'deployuser', secretKeyVariable:'AWS_SECRET_ACCESS_KEY']]) {
                 bat"""
                 aws s3 cp target/spring-petclinic-2.7.3.jar s3://cloudart-bucket-for-aws
                 """
               }
-            } 
+            }
           }
 
         stage ('Deploy'){
           steps{
-            withCredentials([[$class:'AmazonWebServicesCredentialsBinding', accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'deployuser', secretKeyVariable:'AWS_SECRET_ACCESS_KEY']]) { 
+            withCredentials([[$class:'AmazonWebServicesCredentialsBinding', accessKeyVariable:'AWS_ACCESS_KEY_ID',credentialsId:'deployuser', secretKeyVariable:'AWS_SECRET_ACCESS_KEY']]) {
             bat"""
             set pth=C:\\Program Files\\PuTTY
             set usr=ec2-user
             set srv=44.212.16.46
-            
+
             aws s3 cp s3://cloudart-bucket-for-aws/spring-petclinic-2.7.3.jar ./
-            "%pth%\\pscp.exe" -batch -i "C:\\Users\\User\\Desktop\\fn\\other\\ec2\\myFPinstance.ppk" "target/spring-petclinic-2.7.3.jar" "%usr%@%srv%:/home/%usr%"
+            "%pth%\\pscp.exe" -batch -i "C:\\Users\\User\\Desktop\\fn\\other\\ec2\\key\\putty.ppk" "target/spring-petclinic-2.7.3.jar" "%usr%@%srv%:/home/%usr%"
             cd C:\\Users\\User\\Desktop\\fn\\other\\ec2
             ssh -i myFPinstance.pem ec2-user@44.212.16.46
             ./new.sh
