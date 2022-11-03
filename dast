@@ -122,8 +122,8 @@ def scan_type
              steps {
                  script {
                      bat '''
-                         docker cp owasp:/zap/wrk/report.xml ${WORKSPACE}/report.xml
-                         docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
+                         docker cp owasp:/zap/wrk/report.xml C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DAST\\report.xml
+                         docker cp owasp:/zap/wrk/report.html C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DAST\\report.html
 
                      '''
                  }
