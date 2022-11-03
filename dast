@@ -46,7 +46,10 @@ def scan_type
              steps {
                  script {
                          echo "Pulling up last OWASP ZAP container --> Start"
-                         bat 'docker pull owasp/zap2docker-stable'
+                         bat """
+                         "C:\Program Files\Docker\Docker\DockerCli.exe" -SwitchDaemon
+                         docker pull owasp/zap2docker-stable
+                         """
                          echo "Pulling up last VMS container --> End"
                          echo "Starting container --> Start"
                          bat """
