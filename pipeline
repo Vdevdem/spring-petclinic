@@ -36,7 +36,7 @@ pipeline {
             bat"""
             set pth=C:\\Program Files\\PuTTY
             set usr=ec2-user
-            set srv=44.212.16.46
+            set srv=35.173.243.163
 
             aws s3 cp s3://cloudart-bucket-for-aws/spring-petclinic-2.7.3.jar ./
             echo y | "%pth%\\pscp.exe" -i "C:\\Users\\User\\Desktop\\fn\\other\\ec2\\key\\putty.ppk" "target/spring-petclinic-2.7.3.jar" "%usr%@%srv%:/home/%usr%/deploy"
